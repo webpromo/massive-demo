@@ -67,7 +67,7 @@ In `server.js` [add code to connect](https://massive-js.readthedocs.io/en/latest
 
 Use `console.log` to test that you're properly connected to Postgres. Remove it when you're confident it works.
 
-## Step 9: Create a SQL Repository
+## Step 8: Create a SQL Repository
 
 massive-js works by converting your SQL queries, held in files, into JS functions.
 
@@ -88,7 +88,7 @@ db.get_all_injuries(function(err, injuries) {
 
 Create the `./db` directory, and add a file, `get_all_incidents.sql` (incidents, not injuries).
 
-## Step 8: Query Incidents
+## Step 9: Query Incidents
 
 Now that you have a repository for SQL queries, add a query to your new file that shows you retrieves the following pieces of information for every incident in your database:
 

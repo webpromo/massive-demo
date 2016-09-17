@@ -9,10 +9,10 @@ Follow the next steps using pgAdmin, and before class on the 3rd day.
 Create a database called "massive_demo": [View demo](https://www.youtube.com/watch?v=RT6VXSDj6Wg&feature=youtu.be). 
 
 ### Step B: Bootstrap and test your database
+ 
+Copy the contents of [schema.sql](https://github.com/kendagriff/massive-demo/blob/master/schema.sql), paste it into a script (using pgAdmin), and execute it: [View demo](https://www.youtube.com/watch?v=q8QLp-ZHg_o&feature=youtu.be).
 
 ## Mini Project
-
-Copy the contents of [schema.sql](https://github.com/kendagriff/massive-demo/blob/master/schema.sql), paste it into a script (using pgAdmin), and execute it: [View demo](https://www.youtube.com/watch?v=q8QLp-ZHg_o&feature=youtu.be).
 
 ### Step 1
 

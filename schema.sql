@@ -1,9 +1,7 @@
-create sequence incidents_id_seq;
-
 -- Create an affected_areas table
 CREATE TABLE affected_areas
 (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(40)
 );
 
@@ -20,7 +18,7 @@ INSERT INTO affected_areas (id, name) VALUES (9, 'Elbow');
 -- Recreate our data from yesterday
 CREATE TABLE injuries
 (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(40),
   description TEXT,
   tth INTEGER,
@@ -48,7 +46,7 @@ UPDATE injuries SET affected_area_id = 1 WHERE id = 8;
 
 CREATE TABLE causes
 (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(40)
 );
 
@@ -62,7 +60,7 @@ INSERT INTO causes (id, name) VALUES (7, 'Snapping a carrot');
 
 CREATE TABLE incidents
 (
-  id INTEGER PRIMARY KEY DEFAULT NEXTVAL('incidents_id_seq'),
+  id SERIAL PRIMARY KEY,
   us_state VARCHAR(2),
   injury_id INTEGER REFERENCES injuries,
   cause_id INTEGER REFERENCES causes

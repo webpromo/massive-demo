@@ -2,6 +2,18 @@
 
 [Read docs](https://massive-js.readthedocs.io/en/latest/)
 
+## PRE-SETUP
+
+Follow the next steps using pgAdmin, and before class on the 3rd day.
+
+### Step A: Create a database
+
+Create a database called "massive_demo": [View demo](https://www.youtube.com/watch?v=RT6VXSDj6Wg&feature=youtu.be). 
+
+### Step B: Bootstrap and test your database
+
+Copy the contents of [schema.sql](https://github.com/kendagriff/massive-demo/blob/master/schema.sql), paste it into a script (using pgAdmin), and execute it: [View demo](https://www.youtube.com/watch?v=q8QLp-ZHg_o&feature=youtu.be).
+
 ## Step 1
 
 Clone the repo (do not fork it).
@@ -30,36 +42,12 @@ node server.js
 
 Start your Postgres server.
 
-## Step 6: Bootstrap Your Database
+## Step 6: Demo pgAdmin
 
-Begin by launching psql:
+Begin by launching pgAdmin.
 
-```
-psql
-```
-
-Create your database, then exit:
-
-```sql
-create database massive_demo;
-\q
-```
-
-Before finishing, let's inspect the file that will generate our schema and dummy data: `schema.sql` (see Keynote model).
-
-Finally, bootstrap your database from the `./massive-demo` directory with this command:
-
-```
-psql massive_demo < schema.sql
-```
-
-Test it by going back into psql, and querying injuries:
-
-```
-psql
-\connect massive_demo
-select * from injuries;
-```
+* Create a database
+* Examine the tables
 
 ## Step 7: Connect to Postgres via massive-js
 

@@ -1,6 +1,4 @@
-# massive-js
-
-[Read docs](https://massive-js.readthedocs.io/en/latest/)
+# [massive-js](https://massive-js.readthedocs.io/en/latest/)
 
 ## PRE-SETUP
 

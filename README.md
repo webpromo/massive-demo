@@ -2,7 +2,7 @@
 
 ## PRE-SETUP
 
-Follow the next steps using pgAdmin, and before class on the 3rd day.
+Follow the next steps using pgAdmin.
 
 ### Step A: Create a database
 

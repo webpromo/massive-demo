@@ -10,25 +10,27 @@ Create a database called "massive_demo": [View demo](https://www.youtube.com/wat
 
 ### Step B: Bootstrap and test your database
 
+## Mini Project
+
 Copy the contents of [schema.sql](https://github.com/kendagriff/massive-demo/blob/master/schema.sql), paste it into a script (using pgAdmin), and execute it: [View demo](https://www.youtube.com/watch?v=q8QLp-ZHg_o&feature=youtu.be).
 
-## Step 1
+### Step 1
 
 Clone the repo (do not fork it).
 
-## Step 2: Install the NPM modules
+### Step 2: Install the NPM modules
 
 ```
 npm install
 ```
 
-## Step 3: Install massive-js
+### Step 3: Install massive-js
 
 ```
 npm install --save massive
 ```
 
-## Step 4: Test it
+### Step 4: Test it
 
 Start your application by running:
 
@@ -36,24 +38,24 @@ Start your application by running:
 node server.js
 ``` 
 
-## Step 5: Start Postgres
+### Step 5: Start Postgres
 
 Start your Postgres server.
 
-## Step 6: Demo pgAdmin
+### Step 6: Demo pgAdmin
 
 Begin by launching pgAdmin.
 
 * Create a database
 * Examine the tables
 
-## Step 7: Connect to Postgres via massive-js
+### Step 7: Connect to Postgres via massive-js
 
 In `server.js` [add code to connect](https://massive-js.readthedocs.io/en/latest/) to your database:
 
 Use `console.log` to test that you're properly connected to Postgres. Remove it when you're confident it works.
 
-## Step 8: Create a SQL Repository
+### Step 8: Create a SQL Repository
 
 massive-js works by converting your SQL queries, held in files, into JS functions.
 
@@ -74,7 +76,7 @@ db.get_all_injuries(function(err, injuries) {
 
 Create the `./db` directory, and add a file, `get_all_incidents.sql` (incidents, not injuries).
 
-## Step 9: Query Incidents
+### Step 9: Query Incidents
 
 Now that you have a repository for SQL queries, add a query to your new file that shows you retrieves the following pieces of information for every incident in your database:
 
@@ -90,7 +92,7 @@ Your query will require more than one join in a single statement (whoa!). When y
 psql massive_demo < db/get_all_incidents.sql
 ```
 
-## Step 9: Upgrade the GET Endpoint
+### Step 9: Upgrade the GET Endpoint
 
 Now that you have a way to return basic information about incidents of injuries, upgrade the GET endpoint such that an HTTP request can return the information to a client (like Angular) in your response:
 
@@ -102,7 +104,7 @@ db.get_all_injuries(function(err, injuries) {
 });
 ```
 
-## Step 10: Up the Ante
+### Step 10: Up the Ante
 
 If you've made it this far, great work. Now, upgrade your endpoint again, this time accepting two new query parameters, `by=cause` and `cause=Sneezing` (e.g. any cause). When `by=cause` is submitted as part of the same GET request, return the results of a _different_ query, `db/get_incidents_by_cause.sql`.
 
@@ -125,11 +127,11 @@ db.products_in_stock([true, 1000], function(err, products) {
 });
 ```
 
-## Step 11 (Optional): Up the Ante (Again)
+### Step 11 (Optional): Up the Ante (Again)
 
 Upgrade your GET request to accept not only `by=cause`, but `by=affected_area`, without breaking your previous functionality.
 
-## Step 12: Create a New Incident
+### Step 12: Create a New Incident
 
 Upgrade the POST request to give yourself the ability to create a new incident. Here's a sample request body for Postman:
 

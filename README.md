@@ -49,13 +49,39 @@ Begin by launching pgAdmin.
 * Create a database
 * Examine the tables
 
-### Step 7: Connect to Postgres via massive-js
+### Step 7: Include the massive-js Dependency
+ 
+In `server.js`, add to your list of dependencies:
 
-In `server.js` [add code to connect](https://massive-js.readthedocs.io/en/latest/) to your database:
+```
+var massive = require('massive')
+```
+
+### Step 8: Connect to Postgres via massive-js
+
+In `server.js` [add code to connect](https://github.com/robconery/massive-js#express-example) to your database:
+
+```javascript
+var massive = massive.connectSync({
+  connectionString : "postgres://massive:password@localhost/your-database-name"
+});
+```
+
+Connect your massive instance to a `db` key:
+
+```javascript
+app.set('db', massive);
+```
+
+Set a var `db` to the value of the key:
+
+```javascript
+var db = app.get('db');
+```
 
 Use `console.log` to test that you're properly connected to Postgres. Remove it when you're confident it works.
 
-### Step 8: Create a SQL Repository
+### Step 9: Create a SQL Repository
 
 massive-js works by converting your SQL queries, held in files, into JS functions.
 
@@ -76,7 +102,7 @@ db.get_all_injuries(function(err, injuries) {
 
 Create the `./db` directory, and add a file, `get_all_incidents.sql` (incidents, not injuries).
 
-### Step 9: Query Incidents
+### Step 10: Query Incidents
 
 Now that you have a repository for SQL queries, add a query to your new file that shows you retrieves the following pieces of information for every incident in your database:
 
@@ -92,7 +118,7 @@ Your query will require more than one join in a single statement (whoa!). When y
 psql massive_demo < db/get_all_incidents.sql
 ```
 
-### Step 9: Upgrade the GET Endpoint
+### Step 11: Upgrade the GET Endpoint
 
 Now that you have a way to return basic information about incidents of injuries, upgrade the GET endpoint such that an HTTP request can return the information to a client (like Angular) in your response:
 
@@ -104,7 +130,7 @@ db.get_all_injuries(function(err, injuries) {
 });
 ```
 
-### Step 10: Up the Ante
+### Step 12: Up the Ante
 
 If you've made it this far, great work. Now, upgrade your endpoint again, this time accepting two new query parameters, `by=cause` and `cause=Sneezing` (e.g. any cause). When `by=cause` is submitted as part of the same GET request, return the results of a _different_ query, `db/get_incidents_by_cause.sql`.
 
@@ -127,11 +153,11 @@ db.products_in_stock([true, 1000], function(err, products) {
 });
 ```
 
-### Step 11 (Optional): Up the Ante (Again)
+### Step 13 (Optional): Up the Ante (Again)
 
 Upgrade your GET request to accept not only `by=cause`, but `by=affected_area`, without breaking your previous functionality.
 
-### Step 12: Create a New Incident
+### Step 14: Create a New Incident
 
 Upgrade the POST request to give yourself the ability to create a new incident. Here's a sample request body for Postman:
 
@@ -142,5 +168,3 @@ Upgrade the POST request to give yourself the ability to create a new incident. 
   "cause_id": 5
 }
 ```
-
-[FOLLOW UP NOTE](https://massive-js.readthedocs.io/en/latest/quick_start/)

@@ -133,6 +133,9 @@ db.get_all_injuries(function(err, injuries) {
 });
 ```
 
+Using a client like [Postman](https://www.getpostman.com/) can help when making
+test requests.
+
 ### Step 12: Up the Ante
 
 If you've made it this far, great work. Now, upgrade your endpoint again, this
@@ -196,3 +199,38 @@ See the [PostgreSQL INSERT docs](https://www.postgresql.org/docs/9.6/static/sql-
 on the `RETURNING` keyword.
 
 Add `RETURNING id` to your `INSERT` statement from #14.
+
+
+### Step 16 (Optional): Make it pretty
+
+Let's return some HTML. For the root route `/`, using the same query from step 10, render an HTML list
+of all incidents. Here's some boilerplate HTML:
+
+```html
+<html>
+<head>
+  <title>Incidents</title>
+</head>
+<body>
+  <h1>Incidents</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th><th>State</th><th>Injury</th><th>Affected Area</th><th>Cause</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td><td>UT</td><td>Pulled Groin</td><td>Groin</td><td>Jumping jacks</td>
+      </tr>
+      <!-- one tr for each incident -->
+    </tbody>
+  </table>
+</body>
+</html>
+```
+
+Hint:
+
+A templating library like [lodash.template](https://lodash.com/docs/4.17.1#template) can help.
+Install it by running `npm install --save lodash` and adding `var _ = require('lodash')` to `server.js`.

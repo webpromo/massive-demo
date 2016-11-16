@@ -98,7 +98,7 @@ db.get_all_injuries(function(err, injuries) {
 ```
 
 Create the `./db` directory, and add a file, `get_all_incidents.sql`
-(incidents, not injuries).
+(_incidents_, not injuries).
 
 ### Step 10: Query Incidents
 

@@ -10,7 +10,9 @@ Create a database called `massive_demo`: [View demo](https://www.youtube.com/wat
 
 ### Step B: Bootstrap and test your database
  
-Copy the contents of [./schema.sql](https://github.com/kendagriff/massive-demo/blob/master/schema.sql), paste it into a script (using pgAdmin), and execute it: [View demo](https://www.youtube.com/watch?v=q8QLp-ZHg_o&feature=youtu.be).
+Copy the contents of [./schema.sql](https://github.com/statianzo/massive-demo/blob/master/schema.sql),
+paste it into a script (using pgAdmin), and execute it:
+[View demo](https://www.youtube.com/watch?v=q8QLp-ZHg_o&feature=youtu.be).
 
 ## Mini Project
 
@@ -62,24 +64,19 @@ var massive = require('massive')
 In `server.js` [add code to connect](https://github.com/robconery/massive-js#express-example) to your database:
 
 ```javascript
-var massive = massive.connectSync({
-  connectionString : "postgres://massive:password@localhost/your-database-name"
+var db = massive.connectSync({
+  connectionString : 'postgres://localhost/massive_demo'
 });
 ```
 
-Connect your massive instance to a `db` key:
+Add your massive instance as `db` key of app:
 
 ```javascript
-app.set('db', massive);
+app.set('db', db);
 ```
 
-Set a var `db` to the value of the key:
-
-```javascript
-var db = app.get('db');
-```
-
-Use `console.log` to test that you're properly connected to Postgres. Remove it when you're confident it works.
+Use `console.log` to test that you're properly connected to Postgres. Remove it
+when you're confident it works.
 
 ### Step 9: Create a SQL Repository
 
@@ -100,11 +97,14 @@ db.get_all_injuries(function(err, injuries) {
 });
 ```
 
-Create the `./db` directory, and add a file, `get_all_incidents.sql` (incidents, not injuries).
+Create the `./db` directory, and add a file, `get_all_incidents.sql`
+(incidents, not injuries).
 
 ### Step 10: Query Incidents
 
-Now that you have a repository for SQL queries, add a query to your new file that shows you retrieves the following pieces of information for every incident in your database:
+Now that you have a repository for SQL queries, add a query to your new file
+that shows you retrieves the following pieces of information for every incident
+in your database:
 
 * `incidents.id`
 * `incidents.us_state`
@@ -112,7 +112,8 @@ Now that you have a repository for SQL queries, add a query to your new file tha
 * `affected_areas.name`
 * `causes.name`
 
-Your query will require more than one join in a single statement (whoa!). When you're query is ready, test it in psql:
+Your query will require more than one join in a single statement (whoa!). When
+you're query is ready, test it in psql or pgAdmin:
 
 ```
 psql massive_demo < db/get_all_incidents.sql
@@ -120,7 +121,9 @@ psql massive_demo < db/get_all_incidents.sql
 
 ### Step 11: Upgrade the GET Endpoint
 
-Now that you have a way to return basic information about incidents of injuries, upgrade the GET endpoint such that an HTTP request can return the information to a client (like Angular) in your response:
+Now that you have a way to return basic information about incidents of
+injuries, upgrade the GET endpoint such that an HTTP request can return the
+information to a client (like Angular) in your response:
 
 Hint:
 
@@ -132,9 +135,13 @@ db.get_all_injuries(function(err, injuries) {
 
 ### Step 12: Up the Ante
 
-If you've made it this far, great work. Now, upgrade your endpoint again, this time accepting two new query parameters, `by=cause` and `cause=Sneezing` (e.g. any cause). When `by=cause` is submitted as part of the same GET request, return the results of a _different_ query, `db/get_incidents_by_cause.sql`.
+If you've made it this far, great work. Now, upgrade your endpoint again, this
+time accepting two new query parameters, `by=cause` and `cause=Sneezing` (e.g.
+any cause). When `by=cause` is submitted as part of the same GET request,
+return the results of a _different_ query, `db/get_incidents_by_cause.sql`.
 
-Your query should return the same information, but only results that match the value in the `cause` query param.
+Your query should return the same information, but only results that match the
+value in the `cause` query param.
 
 Hint:
 
@@ -145,7 +152,8 @@ select * from products
 where in_stock = $1 and price < $2;
 ```
 
-Your arguments can be submitted as an array as the first argument in the function, before the callback.
+Your arguments can be submitted as an array as the first argument in the
+function, before the callback.
 
 ```js
 db.products_in_stock([true, 1000], function(err, products) {
@@ -155,11 +163,13 @@ db.products_in_stock([true, 1000], function(err, products) {
 
 ### Step 13 (Optional): Up the Ante (Again)
 
-Upgrade your GET request to accept not only `by=cause`, but `by=affected_area`, without breaking your previous functionality.
+Upgrade your GET request to accept not only `by=cause`, but `by=affected_area`,
+without breaking your previous functionality.
 
 ### Step 14: Create a New Incident
 
-Upgrade the POST request to give yourself the ability to create a new incident. Here's a sample request body for Postman:
+Upgrade the POST request to give yourself the ability to create a new incident.
+Here's a sample request body for Postman:
 
 ```json
 {
@@ -168,3 +178,21 @@ Upgrade the POST request to give yourself the ability to create a new incident. 
   "cause_id": 5
 }
 ```
+
+### Step 15 (Optional): Consistent API
+
+Let's keep our API consistent when reading and writing. After creating a new
+incident, return the incident with the same fields as step 10:
+
+* `incidents.id`
+* `incidents.us_state`
+* `injuries.name`
+* `affected_areas.name`
+* `causes.name`
+
+Hint:
+
+See the [PostgreSQL INSERT docs](https://www.postgresql.org/docs/9.6/static/sql-insert.html)
+on the `RETURNING` keyword.
+
+Add `RETURNING id` to your `INSERT` statement from #14.

@@ -69,7 +69,7 @@ var db = massive.connectSync({
 });
 ```
 
-Add your massive instance as `db` key of app:
+Add your massive instance as the `db` setting of `app`:
 
 ```javascript
 app.set('db', db);

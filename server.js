@@ -6,12 +6,16 @@ app.use(bodyParser.json());
 
 var port = 3000;
 
+app.get('/', function(req, res) {
+  res.send('Hello World!');
+});
+
 app.get('/incidents', function(req, res) {
-  console.log('GET /incidents');
+  res.send({incidents: []});
 });
 
 app.post('/incidents', function(req, res) {
-  console.log('POST /incidents');
+  res.send({id: 123});
 });
 
 app.listen(port, function() {

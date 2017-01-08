@@ -4,11 +4,22 @@
 
 Follow these steps using pgAdmin.
 
-### Step A: Create a database
+### Step A: Install Postgres and pgAdmin 3
+
+#### Windows
+
+[Postgres 6.1 & pgAdmin 4](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows)
+
+#### Mac
+
+[Postgres.app](https://postgresapp.com/)
+[pgAdmin 4](https://www.pgadmin.org/download/macos4.php)
+
+### Step B: Create a database
 
 Create a database called `massive_demo`: [View demo](https://www.youtube.com/watch?v=RT6VXSDj6Wg&feature=youtu.be). 
 
-### Step B: Bootstrap and test your database
+### Step C: Bootstrap and test your database
  
 Copy the contents of [./schema.sql](https://github.com/statianzo/massive-demo/blob/master/schema.sql),
 paste it into a script (using pgAdmin), and execute it:
@@ -40,9 +51,14 @@ Start your application by running:
 node server.js
 ``` 
 
+Open [http://localhost:3000](http://localhost:3000) to test.
+
 ### Step 5: Start Postgres
 
 Start your Postgres server.
+
+Windows - the server should always be running
+Mac - Open Postgres.app and look for the Postgres icon in your menu bar.
 
 ### Step 6: Demo pgAdmin
 
@@ -69,13 +85,7 @@ var db = massive.connectSync({
 });
 ```
 
-Add your massive instance as the `db` setting of `app`:
-
-```javascript
-app.set('db', db);
-```
-
-Use `console.log` to test that you're properly connected to Postgres. Remove it
+Use `console.log(db)` to test that you're properly connected to Postgres. Remove it
 when you're confident it works.
 
 ### Step 9: Create a SQL Repository

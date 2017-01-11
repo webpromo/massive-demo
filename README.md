@@ -4,7 +4,7 @@
 
 Follow these steps using pgAdmin.
 
-### Step A: Install Postgres and pgAdmin 3
+### Step A: Install Postgres and pgAdmin
 
 #### Windows
 

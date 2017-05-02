@@ -2,28 +2,16 @@
 
 ## PRE-SETUP
 
-Follow these steps using pgAdmin.
+### Step A: Create a Postgres database and install SQL Tabs
 
-### Step A: Install Postgres and pgAdmin
+Follow the instructions on [https://github.com/statianzo/sql-setup](https://github.com/statianzo/sql-setup)
 
-#### Windows
-
-[Postgres 6.1 & pgAdmin 4](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows)
-
-#### Mac
-
-[Postgres.app](https://postgresapp.com/)
-[pgAdmin 4](https://www.pgadmin.org/download/macos4.php)
-
-### Step B: Create a database
-
-Create a database called `massive_demo`: [View demo](https://www.youtube.com/watch?v=RT6VXSDj6Wg&feature=youtu.be). 
-
-### Step C: Bootstrap and test your database
+### Step B: Bootstrap and test your database
  
 Copy the contents of [./schema.sql](https://github.com/statianzo/massive-demo/blob/master/schema.sql),
-paste it into a script (using pgAdmin), and execute it:
-[View demo](https://www.youtube.com/watch?v=q8QLp-ZHg_o&feature=youtu.be).
+paste it into SQL Tabs and execute it.
+
+Run a test query, `select * from injuries` and ensure you see some results.
 
 ## Mini Project
 
@@ -33,14 +21,10 @@ Clone the repo (do not fork it).
 
 ### Step 2: Install the NPM modules
 
+The necessary dependencies are already added in `package.json`.
+
 ```
 npm install
-```
-
-### Step 3: Install massive-js
-
-```
-npm install --save massive
 ```
 
 ### Step 4: Test it
@@ -53,20 +37,6 @@ node server.js
 
 Open [http://localhost:3000](http://localhost:3000) to test.
 
-### Step 5: Start Postgres
-
-Start your Postgres server.
-
-Windows - the server should always be running
-Mac - Open Postgres.app and look for the Postgres icon in your menu bar.
-
-### Step 6: Demo pgAdmin
-
-Begin by launching pgAdmin.
-
-* Create a database
-* Examine the tables
-
 ### Step 7: Include the massive-js Dependency
  
 In `server.js`, add to your list of dependencies:
@@ -77,11 +47,12 @@ var massive = require('massive')
 
 ### Step 8: Connect to Postgres via massive-js
 
-In `server.js` [add code to connect](https://github.com/robconery/massive-js#express-example) to your database:
+In `server.js` [add code to connect](https://github.com/robconery/massive-js#express-example)
+to your database. Use the same connection string URI as SQL Tabs
 
 ```javascript
 var db = massive.connectSync({
-  connectionString : 'postgres://localhost/massive_demo'
+  connectionString : 'postgres://localhost/mycooldatabase'
 });
 ```
 
@@ -94,7 +65,7 @@ massive-js works by converting your SQL queries, held in files, into JS function
 
 For example, the following file, held in the `./db` directory of your project:
 
-`db/get_all_injuries.sql`
+`db/getAllInjuries.sql`
 ```sql
 SELECT * FROM injuries;
 ```
@@ -102,12 +73,12 @@ SELECT * FROM injuries;
 Yields the following function:
 
 ```js
-db.get_all_injuries(function(err, injuries) {
+db.getAllInjuries(function(err, injuries) {
   console.log(injuries) // injuries will contain an array of injuries
 });
 ```
 
-Create the `./db` directory, and add a file, `get_all_incidents.sql`
+Create the `./db` directory, and add a file, `getAllIncidents.sql`
 (_incidents_, not injuries).
 
 ### Step 10: Query Incidents
@@ -117,17 +88,13 @@ that shows you retrieves the following pieces of information for every incident
 in your database:
 
 * `incidents.id`
-* `incidents.us_state`
+* `incidents.usState`
 * `injuries.name`
-* `affected_areas.name`
+* `affectedAreas.name`
 * `causes.name`
 
 Your query will require more than one join in a single statement (whoa!). When
-you're query is ready, test it in psql or pgAdmin:
-
-```
-psql massive_demo < db/get_all_incidents.sql
-```
+your query is ready, test it in SQL Tabs.
 
 ### Step 11: Upgrade the GET Endpoint
 
@@ -138,7 +105,7 @@ information to a client (like Angular) in your response:
 Hint:
 
 ```js
-db.get_all_injuries(function(err, injuries) {
+db.getAllInjuries(function(err, injuries) {
   console.log(injuries) // injuries will contain an array of injuries
 });
 ```
@@ -151,7 +118,7 @@ test requests.
 If you've made it this far, great work. Now, upgrade your endpoint again, this
 time accepting two new query parameters, `by=cause` and `cause=Sneezing` (e.g.
 any cause). When `by=cause` is submitted as part of the same GET request,
-return the results of a _different_ query, `db/get_incidents_by_cause.sql`.
+return the results of a _different_ query, `db/getIncidentsByCause.sql`.
 
 Your query should return the same information, but only results that match the
 value in the `cause` query param.
@@ -162,21 +129,21 @@ massive-js accepts arguments as part of your SQL using $1, $2, ...
 
 ```sql
 select * from products
-where in_stock = $1 and price < $2;
+where inStock = $1 and price < $2;
 ```
 
 Your arguments can be submitted as an array as the first argument in the
 function, before the callback.
 
 ```js
-db.products_in_stock([true, 1000], function(err, products) {
+db.productsInStock([true, 1000], function(err, products) {
   // products is a results array
 });
 ```
 
 ### Step 13 (Optional): Up the Ante (Again)
 
-Upgrade your GET request to accept not only `by=cause`, but `by=affected_area`,
+Upgrade your GET request to accept not only `by=cause`, but `by=affectedArea`,
 without breaking your previous functionality.
 
 ### Step 14: Create a New Incident
@@ -186,9 +153,9 @@ Here's a sample request body for Postman:
 
 ```json
 {
-  "us_state": "WV",
-  "injury_id": 1,
-  "cause_id": 5
+  "usState": "WV",
+  "injuryId": 1,
+  "causeId": 5
 }
 ```
 
@@ -198,9 +165,9 @@ Let's keep our API consistent when reading and writing. After creating a new
 incident, return the incident with the same fields as step 10:
 
 * `incidents.id`
-* `incidents.us_state`
+* `incidents.usState`
 * `injuries.name`
-* `affected_areas.name`
+* `affectedAreas.name`
 * `causes.name`
 
 Hint:

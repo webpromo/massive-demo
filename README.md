@@ -27,7 +27,7 @@ The necessary dependencies are already added in `package.json`.
 npm install
 ```
 
-### Step 4: Test it
+### Step 3: Test it
 
 Start your application by running:
 
@@ -37,29 +37,29 @@ node server.js
 
 Open [http://localhost:3000](http://localhost:3000) to test.
 
-### Step 7: Include the massive-js Dependency
+### Step 4: Import massive-js
  
-In `server.js`, add to your list of dependencies:
+In `server.js`, add to your list of imports:
 
-```
-var massive = require('massive')
+```js
+var massive = require('massive');
 ```
 
-### Step 8: Connect to Postgres via massive-js
+### Step 5: Connect to Postgres via massive-js
 
 In `server.js` [add code to connect](https://github.com/robconery/massive-js#express-example)
 to your database. Use the same connection string URI as SQL Tabs
 
-```javascript
+```js
 var db = massive.connectSync({
   connectionString : 'postgres://localhost/mycooldatabase'
 });
 ```
 
-Use `console.log(db)` to test that you're properly connected to Postgres. Remove it
-when you're confident it works.
+Use `console.log(db)` to test that you're properly connected to Postgres.
+Remove it when you're confident it works.
 
-### Step 9: Create a SQL Repository
+### Step 6: Create a SQL Repository
 
 massive-js works by converting your SQL queries, held in files, into JS functions.
 
@@ -81,7 +81,7 @@ db.getAllInjuries(function(err, injuries) {
 Create the `./db` directory, and add a file, `getAllIncidents.sql`
 (_incidents_, not injuries).
 
-### Step 10: Query Incidents
+### Step 7: Query Incidents
 
 Now that you have a repository for SQL queries, add a query to your new file
 that shows you retrieves the following pieces of information for every incident
@@ -96,7 +96,7 @@ in your database:
 Your query will require more than one join in a single statement (whoa!). When
 your query is ready, test it in SQL Tabs.
 
-### Step 11: Upgrade the GET Endpoint
+### Step 8: Upgrade the GET Endpoint
 
 Now that you have a way to return basic information about incidents of
 injuries, upgrade the GET endpoint such that an HTTP request can return the
@@ -113,15 +113,14 @@ db.getAllInjuries(function(err, injuries) {
 Using a client like [Postman](https://www.getpostman.com/) can help when making
 test requests.
 
-### Step 12: Up the Ante
+### Step 9: Up the Ante
 
 If you've made it this far, great work. Now, upgrade your endpoint again, this
-time accepting two new query parameters, `by=cause` and `cause=Sneezing` (e.g.
-any cause). When `by=cause` is submitted as part of the same GET request,
-return the results of a _different_ query, `db/getIncidentsByCause.sql`.
+time accepting a query parameter, `usState=UT`. When  submitted as part of the
+GET request, return the results of a _different_ query, `db/getIncidentsByState.sql`.
 
 Your query should return the same information, but only results that match the
-value in the `cause` query param.
+value in the `usState` query param.
 
 Hint:
 
@@ -141,12 +140,12 @@ db.productsInStock([true, 1000], function(err, products) {
 });
 ```
 
-### Step 13 (Optional): Up the Ante (Again)
+### Step 10 (Optional): Up the Ante (Again)
 
-Upgrade your GET request to accept not only `by=cause`, but `by=affectedArea`,
+Upgrade your GET request to accept not only `usState`, but also `cause`,
 without breaking your previous functionality.
 
-### Step 14: Create a New Incident
+### Step 11: Create a New Incident
 
 Upgrade the POST request to give yourself the ability to create a new incident.
 Here's a sample request body for Postman:
@@ -159,7 +158,7 @@ Here's a sample request body for Postman:
 }
 ```
 
-### Step 15 (Optional): Consistent API
+### Step 12 (Optional): Consistent API
 
 Let's keep our API consistent when reading and writing. After creating a new
 incident, return the incident with the same fields as step 10:
@@ -178,7 +177,7 @@ on the `RETURNING` keyword.
 Add `RETURNING id` to your `INSERT` statement from #14.
 
 
-### Step 16 (Optional): Make it pretty
+### Step 13 (Optional): Make it pretty
 
 Let's return some HTML. For the root route `/`, using the same query from step 10, render an HTML list
 of all incidents. Here's some boilerplate HTML:

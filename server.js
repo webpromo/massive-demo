@@ -11,7 +11,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/incidents', function(req, res) {
-  res.send({incidents: []});
+  res.send([]);
 });
 
 app.post('/incidents', function(req, res) {

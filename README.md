@@ -88,7 +88,7 @@ that shows you retrieves the following pieces of information for every incident
 in your database:
 
 * `incidents.id`
-* `incidents.usState`
+* `incidents.state`
 * `injuries.name`
 * `affectedAreas.name`
 * `causes.name`
@@ -116,11 +116,11 @@ test requests.
 ### Step 9: Up the Ante
 
 If you've made it this far, great work. Now, upgrade your endpoint again, this
-time accepting a query parameter, `usState=UT`. When  submitted as part of the
+time accepting a query parameter, `state=UT`. When  submitted as part of the
 GET request, return the results of a _different_ query, `db/getIncidentsByState.sql`.
 
 Your query should return the same information, but only results that match the
-value in the `usState` query param.
+value in the `state` query param.
 
 Hint:
 
@@ -142,7 +142,7 @@ db.productsInStock([true, 1000], function(err, products) {
 
 ### Step 10 (Optional): Up the Ante (Again)
 
-Upgrade your GET request to accept not only `usState`, but also `cause`,
+Upgrade your GET request to accept not only `state`, but also `cause`,
 without breaking your previous functionality.
 
 ### Step 11: Create a New Incident
@@ -152,7 +152,7 @@ Here's a sample request body for Postman:
 
 ```json
 {
-  "usState": "WV",
+  "state": "WV",
   "injuryId": 1,
   "causeId": 5
 }
@@ -164,7 +164,7 @@ Let's keep our API consistent when reading and writing. After creating a new
 incident, return the incident with the same fields as step 10:
 
 * `incidents.id`
-* `incidents.usState`
+* `incidents.state`
 * `injuries.name`
 * `affectedAreas.name`
 * `causes.name`

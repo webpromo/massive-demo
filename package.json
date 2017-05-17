@@ -4,7 +4,7 @@
   "description": "Learn to access Postgres via massive-js",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "./node_modules/.bin/nodemon"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "massive": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

@@ -32,7 +32,7 @@ npm install
 Start your application by running:
 
 ```
-node server.js
+npm start
 ``` 
 
 Open [http://localhost:3000](http://localhost:3000) to test.

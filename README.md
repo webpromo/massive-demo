@@ -161,7 +161,7 @@ Here's a sample request body for Postman:
 ### Step 12 (Optional): Consistent API
 
 Let's keep our API consistent when reading and writing. After creating a new
-incident, return the incident with the same fields as step 10:
+incident, return the incident with the same fields as step 7:
 
 * `incidents.id`
 * `incidents.state`
@@ -174,7 +174,7 @@ Hint:
 See the [PostgreSQL INSERT docs](https://www.postgresql.org/docs/9.6/static/sql-insert.html)
 on the `RETURNING` keyword.
 
-Add `RETURNING id` to your `INSERT` statement from #14.
+Add `RETURNING id` to your `INSERT` statement from step 11.
 
 
 ### Step 13 (Optional): Make it pretty

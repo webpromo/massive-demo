@@ -1,23 +1,23 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var app = express();
+const app = express();
 app.use(bodyParser.json());
 
-var port = 3000;
+const port = 3000;
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/incidents', function(req, res) {
+app.get('/incidents', (req, res) => {
   res.send([]);
 });
 
-app.post('/incidents', function(req, res) {
+app.post('/incidents', (req, res) => {
   res.send({id: 123});
 });
 
-app.listen(port, function() {
-  console.log("Started server on port", port);
+app.listen(port, () => {
+  console.log('Started server on port', port);
 });

@@ -37,22 +37,30 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) to test.
 
-### Step 4: Import massive-js
+### Step 4: Import massive
  
 In `server.js`, add to your list of imports:
 
 ```js
-var massive = require('massive');
+const massive = require('massive');
 ```
 
-### Step 5: Connect to Postgres via massive-js
+### Step 5: Connect to Postgres via massive
 
-In `server.js` [add code to connect](https://github.com/robconery/massive-js#express-example)
-to your database. Use the same connection string URI as SQL Tabs
+In `server.js` [add code to connect](https://github.com/dmfay/massive-js#quickstart)
+to your database. Use the same connection string URI as SQL Tabs. Wrap the
+`app.listen` call to ensure your database is connected before accepting
+requests.
+
+Add the connection as a `db` setting to the app. This will allow the `db`
+object to be accessed in requests through `req.app.get('db')`.
 
 ```js
-var db = massive.connectSync({
-  connectionString : 'postgres://localhost/mycooldatabase'
+massive('postgres://localhost/mycooldatabase').then(db => {
+  app.set('db', db);
+  app.listen(port, () => {
+    console.log('Started server on port', port);
+  });
 });
 ```
 
@@ -73,7 +81,7 @@ SELECT * FROM injuries;
 Yields the following function:
 
 ```js
-db.getAllInjuries(function(err, injuries) {
+db.getAllInjuries().then(injuries => {
   console.log(injuries) // injuries will contain an array of injuries
 });
 ```
@@ -105,7 +113,7 @@ information to a client (like Angular) in your response:
 Hint:
 
 ```js
-db.getAllInjuries(function(err, injuries) {
+db.getAllInjuries().then(injuries => {
   console.log(injuries) // injuries will contain an array of injuries
 });
 ```
@@ -135,17 +143,12 @@ Your arguments can be submitted as an array as the first argument in the
 function, before the callback.
 
 ```js
-db.productsInStock([true, 1000], function(err, products) {
+db.productsInStock([true, 1000]).then(products => {
   // products is a results array
 });
 ```
 
-### Step 10 (Optional): Up the Ante (Again)
-
-Upgrade your GET request to accept not only `state`, but also `cause`,
-without breaking your previous functionality.
-
-### Step 11: Create a New Incident
+### Step 10: Create a New Incident
 
 Upgrade the POST request to give yourself the ability to create a new incident.
 Here's a sample request body for Postman:
@@ -158,7 +161,7 @@ Here's a sample request body for Postman:
 }
 ```
 
-### Step 12 (Optional): Consistent API
+### Step 11 (Optional): Consistent API
 
 Let's keep our API consistent when reading and writing. After creating a new
 incident, return the incident with the same fields as step 7:
@@ -177,10 +180,11 @@ on the `RETURNING` keyword.
 Add `RETURNING id` to your `INSERT` statement from step 11.
 
 
-### Step 13 (Optional): Make it pretty
+### Step 12 (Optional): Server side rendering
 
-Let's return some HTML. For the root route `/`, using the same query from step 10, render an HTML list
-of all incidents. Here's some boilerplate HTML:
+Let's return some HTML by rendering on the server with React. For the root
+route `/`, using the same query from step 10, render an HTML list of all
+incidents. Here's some boilerplate HTML:
 
 ```html
 <html>
@@ -208,5 +212,5 @@ of all incidents. Here's some boilerplate HTML:
 
 Hint:
 
-A templating library like [lodash.template](https://lodash.com/docs/4.17.1#template) can help.
-Install it by running `npm install --save lodash` and adding `var _ = require('lodash')` to `server.js`.
+`require('react-dom/server').renderToString` will render React components as a
+string. Returning that from express will be rendered as html.

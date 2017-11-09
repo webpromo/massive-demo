@@ -1,6 +1,6 @@
 {
   "execMap": {
-    "js": "./node_modules/.bin/babel-node --presets react"
+    "js": "babel-node --presets react"
   },
   "ext": "js json sql"
 }

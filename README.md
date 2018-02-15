@@ -13,6 +13,9 @@ paste it into SQL Tabs and execute it.
 
 Run a test query, `select * from injuries` and ensure you see some results.
 
+Schema is as follows:
+![schema](https://raw.githubusercontent.com/statianzo/massive-demo/master/schema.png)
+
 ## Mini Project
 
 ### Step 1

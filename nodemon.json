@@ -1,6 +1,3 @@
 {
-  "execMap": {
-    "js": "babel-node --presets react"
-  },
   "ext": "js json sql"
 }

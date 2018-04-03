@@ -56,19 +56,21 @@ to your database. Use the same connection string URI as SQL Tabs. Wrap the
 `app.listen` call to ensure your database is connected before accepting
 requests.
 
-Add the connection as a `db` setting to the app. This will allow the `db`
-object to be accessed in requests through `req.app.get('db')`.
+Add the connection as a `db` setting to the app. This will allow the
+`connection` object to be accessed in requests through `req.app.get('db')`.
 
 ```js
-massive('postgres://localhost/mycooldatabase').then(db => {
-  app.set('db', db);
+const connectionString = 'postgres://localhost/mycooldatabase';
+
+massive(connectionString).then(connection => {
+  app.set('db', connection);
   app.listen(port, () => {
     console.log('Started server on port', port);
   });
 });
 ```
 
-Use `console.log(db)` to test that you're properly connected to Postgres.
+Use `console.log(connection)` to test that you're properly connected to Postgres.
 Remove it when you're confident it works.
 
 ### Step 6: Create a SQL Repository
@@ -136,18 +138,17 @@ value in the `state` query param.
 
 Hint:
 
-massive-js accepts arguments as part of your SQL using $1, $2, ...
+massive-js accepts arguments as part of your SQL using ${foo}, ${bar}, ...
 
 ```sql
-select * from products
-where inStock = $1 and price < $2;
+SELECT * FROM Products
+WHERE inStock = ${isAvailable} AND price < ${maxPrice};
 ```
 
-Your arguments can be submitted as an array as the first argument in the
-function, before the callback.
+Your arguments can be submitted as an object.
 
 ```js
-db.productsInStock([true, 1000]).then(products => {
+db.getProducts({isAvailable: true, maxPrice:1000}).then(products => {
   // products is a results array
 });
 ```
@@ -160,8 +161,8 @@ Here's a sample request body for Postman:
 ```json
 {
   "state": "WV",
-  "injuryId": 1,
-  "causeId": 5
+  "injuryid": 1,
+  "causeid": 5
 }
 ```
 

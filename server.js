@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const massive = require('massive');
+
+const connectionString = 'postgres://YOUR_CONNECTION_STRING';
 
 const app = express();
 app.use(bodyParser.json());
@@ -7,17 +10,42 @@ app.use(bodyParser.json());
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('massive-demo');
+  const db = req.app.get('db');
+
+  db.getAllInjuries().then(injuries => {
+    res.send(injuries);
+  });
 });
 
 app.get('/incidents', (req, res) => {
-  res.send([]);
+  const db = req.app.get('db');
+  const state = req.query.state;
+
+  if (state) {
+    db.getIncidentsByState({state: state})
+      .then(incidents => {
+        res.send(incidents);
+      });
+  }
+  else {
+    db.getAllIncidents().then(incidents => {
+      res.send(incidents);
+    });
+  }
 });
 
 app.post('/incidents', (req, res) => {
-  res.send({id: 123});
+  const incident = req.body;
+  const db = req.app.get('db');
+
+  db.createIncident(incident).then(results => {
+    res.send(results[0]);
+  });
 });
 
-app.listen(port, () => {
-  console.log('Started server on port', port);
+massive(connectionString).then(connection => {
+  app.set('db', connection);
+  app.listen(port, () => {
+    console.log('Started server on port', port);
+  });
 });
